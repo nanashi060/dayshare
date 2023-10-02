@@ -1,0 +1,23 @@
+services:
+  dev:
+    build: 
+      context: .
+      target: dev
+    volumes:
+      # (1)
+      - type: bind
+        source: ./src
+        target: /src
+      # (2)
+      - type: volume
+        source: node_volumes
+        target: /src/node_modules
+      # (3)
+    command: [ "npm", "run", "dev" ]
+    ports:
+      - "3000:3000"
+    tty: true
+    stdin_open: true
+
+volumes:
+  node_volumes:
