@@ -13,7 +13,9 @@
     "next": "latest",
     "prettier": "^3.0.3",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-icons": "^4.11.0",
+    "recharts": "^2.8.0"
   },
   "devDependencies": {
     "@types/node": "latest",
