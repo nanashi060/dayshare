@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import type { NextAuthOptions, User } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { auth } from '@/firebase/admin';
+import { auth } from '../../../firebase/admin';
 
 // credentials のスキーマを定義します
 const credentialsSchema = {

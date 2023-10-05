@@ -1,11 +1,31 @@
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
+'use client';
 
-const ServerComponent = async () => {
-  const session = await getServerSession(authOptions);
-  const user = session?.user;
+import { useState } from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase/client';
+import { signIn as signInByNextAuth } from 'next-auth/react';
 
-  return <p>{JSON.stringify(user)}</p>;
+const SingIn = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const signIn = async () => {
+        if (!email) return;
+        if (!password) return;
+
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const idToken = await userCredential.user.getIdToken();
+            await signInByNextAuth('credentials', {
+                idToken,
+                callbackUrl: '/',
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    return <div></div>;
 };
 
-export default ServerComponent;
+export default SingIn;
