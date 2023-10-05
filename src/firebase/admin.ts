@@ -6,7 +6,7 @@ export const firebaseAdmin =
     initializeApp({
         credential: cert({
             projectId: process.env.NEXT_PUBLIC_FSA_PROJECT_ID,
-            privateKey: process.env.NEXT_PUBLIC_FSA_PRIVATE_KEY.replace(/\\n/g, '\n'),
+            privateKey: (process.env.NEXT_PUBLIC_FSA_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
             clientEmail: process.env.NEXT_PUBLIC_FSA_CLIENT_EMAIL,
         }),
     });
