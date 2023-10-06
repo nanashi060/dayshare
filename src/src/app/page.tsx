@@ -1,3 +1,4 @@
+import { CardList } from 'components/PieChart/CardList';
 import ClientComponent from '../../components/ClientComponent';
 import ServerComponent from '../../components/ServerComponent';
 import TestComponent from '../../components/test';
@@ -9,6 +10,7 @@ const Home = async () => {
             <ClientComponent />
             <ServerComponent />
             <TestComponent />
+            <CardList />
         </main>
     );
 };
