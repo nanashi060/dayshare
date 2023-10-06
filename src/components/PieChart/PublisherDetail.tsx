@@ -1,9 +1,12 @@
 import Image from 'next/image';
+import { FC } from 'react';
 
-export const Publisher = () => {
-    const name = '山田花子';
-    const id = '@yamahana';
-    const time = '2023/10/02 15:37';
+type Prop = { data: any };
+
+export const Publisher: FC<Prop> = ({ data }) => {
+    const name = data.name;
+    const id = data.id;
+    const time = data.date;
     return (
         <div className="flex">
             <Image src={''} alt="" width={42} height={42} style={{ objectFit: 'cover' }} />

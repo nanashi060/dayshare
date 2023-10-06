@@ -1,11 +1,12 @@
+import { publisherDetailMock } from 'Mock/publisherDetailMock';
 import { Card } from './Card';
 
 export const CardList = () => {
-    const data = ['大学生', 'エンジニア'];
+    const publisherData = publisherDetailMock;
     return (
-        <div className="grid grid-cols-3 place-items-center">
-            {data.map((item, index) => (
-                <Card key={index} />
+        <div className="flex gap-[50px]">
+            {publisherData.map((item, index) => (
+                <Card key={index} publisherData={item} />
             ))}
         </div>
     );
