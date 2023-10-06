@@ -1,11 +1,10 @@
 import Image from 'next/image';
-import Sidebar from './_components/sidebar/page';
+import Sidebar from '../components/sidebar';
 
 export default function Home() {
-  return (
-    <main className='bg-white'>
-      <Sidebar />
-
-    </main>
-  );
+    return (
+        <main className="bg-white">
+            <Sidebar />
+        </main>
+    );
 }
