@@ -61,23 +61,17 @@ const App: React.FC = () => {
                     <img
                         src={imageUrl}
                         alt="Profile"
-                        style={{
-                            width: '96px',
-                            height: '96px',
-                            borderRadius: '50%',
-                            objectFit: 'cover',
-                            marginRight: '16px',
-                        }}
+                        className="w-24 h-24 rounded-full object-cover mr-4"
                     />
                     <div className="relative inline-flex">
                         <select
-                            className="border border-gray-300 rounded-full text-gray-600 h-10 pr-10 pl-2 bg-white hover:border-gray-400 focus:outline-none appearance-none"
+                            className="border border-gray-300 rounded-full text-gray-600 h-10 pr-3 pl-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
                             style={{
                                 backgroundImage: "url('/caret-down-solid.svg')",
                                 backgroundPosition: 'left 10px center',
                                 backgroundRepeat: 'no-repeat',
-                                paddingLeft: '30px',
-                                paddingRight: '10px',
+                                paddingLeft: '38px',
+                                paddingRight: '16px',
                             }}
                         >
                             <option>カテゴリを選択</option>
@@ -88,6 +82,7 @@ const App: React.FC = () => {
                     </div>
                 </div>
                 {schedule.map((s, index) => (
+                    // 時間差分も保存する
                     <div className="flex items-center justify-center my-2" key={index}>
                         <input
                             type="time"

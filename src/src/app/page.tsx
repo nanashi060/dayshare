@@ -9,8 +9,6 @@ const Home = async () => {
         <main>
             <ClientComponent />
             <ServerComponent />
-            <SchduleModalComponent />
-            <TestComponent />
         </main>
     );
 };
