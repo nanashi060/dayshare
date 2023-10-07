@@ -9,7 +9,13 @@ export const Publisher: FC<Prop> = ({ data }) => {
     const time = data.date;
     return (
         <div className="flex gap-x-3">
-            <Image src={''} alt="" width={42} height={42} style={{ objectFit: 'cover' }} />
+            <Image
+                src={''}
+                alt=""
+                width={42}
+                height={42}
+                style={{ objectFit: 'cover', borderRadius: '50%' }}
+            />
 
             <div>
                 <div className="flex gap-x-3">
