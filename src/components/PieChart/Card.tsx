@@ -1,4 +1,5 @@
 import { CustomPieChart } from './CustomPieChart';
+import { LikeButton } from './LikeButton';
 import { Publisher } from './PublisherDetail';
 import { Tag } from './Tag';
 import { FC } from 'react';
@@ -12,6 +13,7 @@ export const Card: FC<porp> = ({ publisherData }) => {
             <Publisher data={publisherData} />
             <CustomPieChart />
             <Tag titleList={titleList} />
+            <LikeButton data={publisherData} />
         </div>
     );
 };
