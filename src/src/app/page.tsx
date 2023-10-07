@@ -1,6 +1,7 @@
 import ClientComponent from '../../components/ClientComponent';
 import ServerComponent from '../../components/ServerComponent';
 import TestComponent from '../../components/test';
+import Sidebar from '../../components/sidebar';
 import './globals.css';
 
 const Home = async () => {
@@ -9,6 +10,7 @@ const Home = async () => {
             <ClientComponent />
             <ServerComponent />
             <TestComponent />
+            <Sidebar />
         </main>
     );
 };
