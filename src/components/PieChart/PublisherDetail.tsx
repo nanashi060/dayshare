@@ -7,10 +7,11 @@ export const Publisher: FC<Prop> = ({ data }) => {
     const name = data.name;
     const id = data.id;
     const time = data.date;
+    const icon_image = data.icon_image;
     return (
         <div className="flex gap-x-3">
             <Image
-                src={''}
+                src={icon_image}
                 alt=""
                 width={42}
                 height={42}
