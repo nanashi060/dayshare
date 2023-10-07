@@ -20,6 +20,9 @@ const config: Config = {
             },
         },
     },
+    colors: {
+        'kusumi-pink': '#BE8080',
+    },
     plugins: [],
 };
 export default config;

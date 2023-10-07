@@ -8,6 +8,7 @@ import {
     createUserWithEmailAndPassword,
     updateProfile,
 } from 'firebase/auth';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { auth } from '../../../firebase/client';
 import { signIn as signInByNextAuth } from 'next-auth/react';
 
@@ -15,21 +16,54 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+    const [image, setImage] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
 
+    const onImageChange = (e: any) => {
+        const file = e.target.files[0];
+        setImage(file);
+    };
+
     const signUp = async () => {
-        if (!email || !password || !username) return;
+        if (!email || !password || !username || !image) return;
 
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            await updateProfile(userCredential.user, { displayName: username });
-            const idToken = await userCredential.user.getIdToken();
-            await signInByNextAuth('credentials', { idToken, callbackUrl: '/' });
+            const userId = userCredential.user.uid;
+
+            // upload image to Firebase Storage
+            const storage = getStorage();
+            const imagePath = `userImages/${userId}/profile_picture.png`;
+            const storageRef = ref(storage, imagePath);
+            const uploadTask = uploadBytesResumable(storageRef, image);
+
+            uploadTask.on(
+                'state_changed',
+                (snapshot) => {
+                    // handle progress
+                    // you can use snapshot to display the upload progress to the user
+                },
+                (error) => {
+                    // handle error
+                    setErrorMessage(error.message);
+                },
+                async () => {
+                    // handle success
+                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                    await updateProfile(userCredential.user, {
+                        displayName: username,
+                        photoURL: downloadURL,
+                    });
+                    const idToken = await userCredential.user.getIdToken();
+                    await signInByNextAuth('credentials', { idToken, callbackUrl: '/' });
+                }
+            );
         } catch (e: any) {
             console.error(e);
             setErrorMessage(e.message);
         }
     };
+
     const signUpWithGoogle = async () => {
         try {
             const provider = new GoogleAuthProvider();
@@ -65,6 +99,11 @@ const SignUp = () => {
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                     placeholder="パスワード"
+                    className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                />
+                <input
+                    type="file"
+                    onChange={onImageChange}
                     className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                 />
                 <button
