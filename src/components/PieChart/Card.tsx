@@ -13,7 +13,9 @@ export const Card: FC<porp> = ({ publisherData }) => {
             <Publisher data={publisherData} />
             <CustomPieChart />
             <Tag titleList={titleList} />
-            <LikeButton data={publisherData} />
+            <div className="mt-2">
+                <LikeButton data={publisherData} />
+            </div>
         </div>
     );
 };
