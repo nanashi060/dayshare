@@ -32,16 +32,16 @@ export default function Sidebar() {
                 </div>
             </div>
 
-            <button className="bg-kusumi-pink text-white pt-3 pr-4 pb-3 pl-4 rounded-xl flex text-md gap-5 items-center mb-6 mx-auto hover:scale-105 hover:duration-300">
+            <a href='/postmodal' className="bg-kusumi-pink text-white pt-3 pb-3 justify-center rounded-xl w-52 flex text-md gap-5 items-center mb-6 mx-auto hover:scale-105 hover:duration-300" >
                 <FaCalendarPlus size={32} />
                 スケジュールを追加
-            </button>
-            <button className="bg-kusumi-pink text-white pt-4 pr-20 pb-4 pl-20 rounded-xl flex text-md mb-6 mx-auto hover:scale-105 hover:duration-300">
+            </a>
+            <a href='/signin' className="bg-kusumi-pink text-white pt-4 pb-4 justify-center rounded-xl w-52 flex text-md mb-6 mx-auto hover:scale-105 hover:duration-300">
                 ログイン
-            </button>
-            <button className="bg-kusumi-pink text-white pt-4 pr-20 pb-4 pl-20 rounded-xl flex text-md mb-6 mx-auto hover:scale-105 hover:duration-300">
+            </a>
+            <a href='/signup' className="bg-kusumi-pink text-white pt-4 pb-4 justify-center rounded-xl w-52 flex text-md mb-6 mx-auto hover:scale-105 hover:duration-300">
                 新規登録
-            </button>
+            </a>
         </div>
     );
 }
