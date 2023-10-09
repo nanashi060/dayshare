@@ -27,7 +27,7 @@ export const ProfileTop = () => {
             <p className=" text-gray-5F text-center font-normal text-lg">{data.id}</p>
             <p className="text-gray-5F text-center font-normal text-lg pt-5">{data.discription}</p>
             <div className="flex justify-center text-black text-center font-normal pt-6 text-lg gap-x-5">
-                <p>フォロー中 {data.followerNum}人</p>
+                <p>フォロー中 {data.followNum}人</p>
 
                 <p>フォロワー {data.followerNum}人</p>
             </div>
