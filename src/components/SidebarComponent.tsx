@@ -6,7 +6,7 @@ import { FaCalendarPlus } from 'react-icons/fa6';
 
 export default function Sidebar() {
     return (
-        <div className="p-6 w-1/4 bg-white text-left -ml-0 mr-auto h-screen min-w-max border-r border-gray-D9">
+        <div className="p-6 w-1/4 bg-white text-left -ml-0  h-screen min-w-max border-r border-gray-D9">
             <div className="w-12">
                 <a href="/">
                     <FaChartPie size={48} />
