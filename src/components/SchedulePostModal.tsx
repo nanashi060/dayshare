@@ -32,7 +32,7 @@ const customStyles: ReactModal.Styles = {
 
 const App: React.FC = () => {
     const { data: session } = useSession();
-    const [modalIsOpen, setModalIsOpen] = useState(true);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
     const [schedule, setSchedule] = useState([{ startTime: '', endTime: '', activity: '' }]);
     const [tags, setTags] = useState<string[]>([]);
@@ -255,7 +255,7 @@ const App: React.FC = () => {
                         placeholder="詳細を入力"
                         onChange={(e) => setDetails(e.target.value)}
                         value={details}
-                        className="w-11/12 h-28 p-2 border rounded-md mt-2 text-sm"
+                        className="w-11/12 h-28 p-2 border rounded-md mt-2 text-sm resize-none"
                     />
                 </div>
                 <div className="flex items-center justify-center my-2">
