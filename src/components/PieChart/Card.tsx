@@ -7,7 +7,11 @@ import { FC } from 'react';
 type porp = { publisherData: any };
 
 export const Card: FC<porp> = ({ publisherData }) => {
-    const titleList = ['大学生', 'エンジニア'];
+    if (!publisherData) {
+        return <div>Loading...</div>;
+    }
+    // const titleList = publisherData.map((item: any) => item.tags);
+    const titleList = publisherData.tags;
     return (
         <div className="w-[200px]">
             <Publisher data={publisherData} />

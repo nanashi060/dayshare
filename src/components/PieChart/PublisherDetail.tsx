@@ -1,12 +1,16 @@
 import Image from 'next/image';
 import { FC } from 'react';
+import { formatDate } from 'utils/formatDate';
 
 type Prop = { data: any };
 
 export const Publisher: FC<Prop> = ({ data }) => {
+    const date = new Date(data.timestamp._seconds * 1000);
+    const formatTime = formatDate(date);
+
     const name = data.name;
     const id = data.id;
-    const time = data.date;
+    const time = formatTime;
     const icon_image = data.icon_image;
     return (
         <div className="flex gap-x-3">
