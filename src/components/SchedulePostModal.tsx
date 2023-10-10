@@ -143,14 +143,6 @@ const App: React.FC = () => {
 
     return (
         <div className="container mx-auto">
-            {session && (
-                <button
-                    onClick={openModal}
-                    className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
-                >
-                    モーダルを開く
-                </button>
-            )}
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
@@ -239,7 +231,7 @@ const App: React.FC = () => {
                 <div
                     onClick={addScheduleField}
                     className="flex items-center justify-center cursor-pointer text-base mt-6 mb-6 gap-3 text-kusumi-pink hover:text-[#a56e6e]"
-                    style={{cursor: 'pointer' }}
+                    style={{ cursor: 'pointer' }}
                 >
                     <FaCirclePlus size={25} />
                     <span>スケジュールを追加</span>
