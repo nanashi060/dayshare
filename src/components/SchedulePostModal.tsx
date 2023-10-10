@@ -32,7 +32,7 @@ const customStyles: ReactModal.Styles = {
 
 const App: React.FC = () => {
     const { data: session } = useSession();
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(true);
     const [imageUrl, setImageUrl] = useState('');
     const [schedule, setSchedule] = useState([{ startTime: '', endTime: '', activity: '' }]);
     const [tags, setTags] = useState<string[]>([]);

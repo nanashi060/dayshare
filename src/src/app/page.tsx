@@ -9,7 +9,6 @@ const Home = async () => {
             <ClientComponent />
             <ServerComponent />
             <Sidebar />
-            <SchedulePostComponent />
         </main>
     );
 };
