@@ -15,7 +15,7 @@ export const Card: FC<porp> = ({ publisherData }) => {
     return (
         <div className="w-[200px]">
             <Publisher data={publisherData} />
-            <CustomPieChart />
+            <CustomPieChart data={publisherData} />
             <Tag titleList={titleList} />
             <div className="mt-2">
                 <LikeButton data={publisherData} />
