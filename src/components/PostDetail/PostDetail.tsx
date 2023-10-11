@@ -1,20 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
-import DetailModal from 'components/PieChart/DetailModal';
-import { FaXmark } from 'react-icons/fa6';
 import CommentList from './CommentList';
 import Detail from './Detail';
 
-const PostDetail = async () => {
+const PostDetail = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
         <div>
-            <FaXmark />
-            <Detail />
-            <CommentList />
-            <DetailModal
+            <button className="px-2 bg-slate-400 text-white" onClick={() => setIsOpen(true)}>
+                open
+            </button>
+            <Detail
                 isOpen={isOpen}
                 closeModal={() => setIsOpen(false)}
                 openModal={() => setIsOpen(true)}

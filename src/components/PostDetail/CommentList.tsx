@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Comment from './Comment';
 
-const CommentList = () => {
+type Prop = { data: any };
+
+const CommentList: FC<Prop> = ({ data }) => {
     return (
-        <div>
-            <Comment />
+        <div className="mt-[14px] grid gap-y-5">
+            {data && data.map((item: any, index: number) => <Comment key={index} item={item} />)}
         </div>
     );
 };
