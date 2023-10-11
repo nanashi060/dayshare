@@ -28,7 +28,6 @@ type Prop = {
     isOpen: boolean;
     openModal: () => void;
     closeModal: () => void;
-    openDetailModal: () => void;
 };
 
 const DetailModal: FC<Prop> = ({ isOpen, openModal, closeModal }) => {
