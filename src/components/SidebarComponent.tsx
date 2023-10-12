@@ -36,6 +36,7 @@ const ActionButton: FC<ActionButtonProps> = ({ href, onClick, children }) => (
 
 export default function Sidebar() {
     const { data: session } = useSession();
+    const userId = session?.user?.uid;
 
     return (
         <div className="p-6 w-1/4 bg-white text-left -ml-0  h-screen min-w-max border-r border-gray-D9">
@@ -53,7 +54,7 @@ export default function Sidebar() {
                 </NavigationLink>
                 {session ? (
                     <>
-                        <NavigationLink href="/profile" icon={<FaUser size={36} />}>
+                        <NavigationLink href={`/profile/${userId}`} icon={<FaUser size={36} />}>
                             プロフィール
                         </NavigationLink>
                         <ActionButton href="/postmodal">
