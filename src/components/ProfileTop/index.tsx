@@ -17,18 +17,21 @@ export const ProfileTop: React.FC = () => {
     const [imageUrl, setImageUrl] = useState('');
     const [userName, setUserName] = useState('');
     const [description, setDescription] = useState('');
-    const [id, setId] = useState('');
+    // const [id, setId] = useState('');
 
-    const { data }: any = useSWR(`/api/profileData/${id}`, axios);
+    const userId = session?.user?.uid;
+
+    const { data }: any = useSWR(`/api/profileData/${userId}`, axios);
     const profileData = data?.data;
-    const router = useRouter();
+    // const router = useRouter();
+    console.log('profileData', profileData);
 
-    useEffect(() => {
-        const tmpPath = router.asPath.split('/')[2];
-        if (tmpPath === '[id]') return;
-        console.log(tmpPath);
-        setId(tmpPath);
-    }, []);
+    // useEffect(() => {
+    //     const tmpPath = router.asPath.split('/')[2];
+    //     if (tmpPath === '[id]') return;
+    //     console.log(tmpPath);
+    //     setId(tmpPath);
+    // }, []);
 
     if (!data) {
         return <div>loading...</div>;
