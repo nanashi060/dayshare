@@ -4,9 +4,7 @@ import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useSession } from 'next-auth/react';
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
-// import '../../../src/src/app/globals.css';
+import axios from 'axios';
 import { FC } from 'react';
 
 const customStyles: ReactModal.Styles = {
@@ -29,15 +27,28 @@ const customStyles: ReactModal.Styles = {
     },
 };
 
-type Prop = { isOpen: boolean; closeModal: () => void; openModal: () => void };
+type Prop = { isOpen: boolean; closeModal: () => void; openModal: () => void; item: any };
 
-export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal }) => {
+export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, item }) => {
+    const [imageUrl, setImageUrl] = useState(item.image);
+    const [userName, setUserName] = useState(item.name);
+    const [description, setDescription] = useState(item?.description);
     const { data: session } = useSession();
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [imageUrl, setImageUrl] = useState('');
-    const [userName, setUserName] = useState('');
-    const [description, setDescription] = useState('');
-    const [editMode, setEditMode] = useState(false); // 編集モードのフラグ\
+    const id = session?.user?.uid;
+
+    const closeAndSave = async () => {
+        try {
+            await axios.put('/api/profileData', {
+                imageUrl,
+                userName,
+                description,
+                id,
+            });
+            closeModal();
+        } catch {
+            alert('error');
+        }
+    };
 
     const cancelEdit = () => {
         setUserName('');
@@ -45,20 +56,20 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal }) 
         closeModal();
     };
 
-    const closeAndSave = () => {};
-
     return (
         <Modal
-            isOpen={modalIsOpen}
+            isOpen={isOpen}
             onRequestClose={closeModal}
             style={customStyles}
             contentLabel="Profile Modal"
         >
             <div className="flex items-center justify-center">
-                <img
+                <Image
                     src={imageUrl}
                     alt="Profile"
-                    className="w-24 h-24 rounded-full object-cover mt-5 mb-2"
+                    className="rounded-full object-cover mt-5 mb-2"
+                    width={96}
+                    height={96}
                 />
             </div>
             <form className="text-center">

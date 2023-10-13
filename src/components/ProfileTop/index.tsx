@@ -9,55 +9,73 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import axios from 'axios';
 import useSWR from 'swr';
 import { ChangeProfileModal } from '../ChangeProfileModal';
-import { useRouter } from 'next/router';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../firebase/client';
+import { Loading } from './Loading';
 
 export const ProfileTop: React.FC = () => {
-    const { data: session } = useSession();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
     const [userName, setUserName] = useState('');
     const [description, setDescription] = useState('');
-    // const [id, setId] = useState('');
-
+    const { data: session } = useSession();
     const userId = session?.user?.uid;
+    console.log('userId', userId);
 
     const { data }: any = useSWR(`/api/profileData/${userId}`, axios);
-    const profileData = data?.data;
-    // const router = useRouter();
+    const profileData = data ? data?.data : {};
+
     console.log('profileData', profileData);
 
-    // useEffect(() => {
-    //     const tmpPath = router.asPath.split('/')[2];
-    //     if (tmpPath === '[id]') return;
-    //     console.log(tmpPath);
-    //     setId(tmpPath);
-    // }, []);
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // ユーザーがログインしている場合
+                const photoURL = user.photoURL;
+                setImageUrl(photoURL || '');
+                if (photoURL) {
+                    console.log('ユーザーの photoURL:', photoURL);
+                } else {
+                    console.log('photoURL が設定されていません');
+                }
+            } else {
+                // ユーザーがログアウトしている、またはログインしていない場合
+                console.log('ユーザーがログインしていません');
+            }
+        });
+    }, []);
+
+    const item = { image: imageUrl, ...profileData };
+    console.log('item', item);
 
     if (!data) {
-        return <div>loading...</div>;
+        return <Loading />;
     }
 
     return (
         <div className="mx-[30px]">
+            <ChangeProfileModal
+                isOpen={modalIsOpen}
+                closeModal={() => setModalIsOpen(false)}
+                openModal={() => setModalIsOpen(true)}
+                item={item}
+            />
             <button
                 onClick={() => setModalIsOpen(true)}
                 className="text-gray-5F ml-auto relative block mr-[5vw] top-12 text-xs font-normal hover:bg-[#b9b9b9] text-center bg-gray-D9 py-1 px-2 rounded-[10px]"
             >
                 プロフィールを編集
             </button>
-            <ChangeProfileModal
-                isOpen={modalIsOpen}
-                closeModal={() => setModalIsOpen(false)}
-                openModal={() => setModalIsOpen(true)}
-            />
+
             <Image
-                src={''}
+                src={imageUrl}
                 alt=""
                 width={120}
                 height={120}
                 style={{ objectFit: 'cover', borderRadius: '50%' }}
                 className="mx-auto"
             />
+
             <h3 className=" font-medium text-center text-lg text-black pt-3">{profileData.name}</h3>
             <p className=" text-gray-5F text-center font-normal text-base leading-none">
                 {profileData.id}
