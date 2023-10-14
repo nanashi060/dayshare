@@ -35,6 +35,7 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
     const [description, setDescription] = useState(item?.description);
     const { data: session } = useSession();
     const id = session?.user?.uid;
+    console.log('item', item);
 
     const closeAndSave = async () => {
         try {
@@ -44,6 +45,10 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
                 description,
                 id,
             });
+            const newItem = await axios.get(`/api/profileData/${id}`);
+            setImageUrl(newItem.data.imageUrl);
+            setUserName(newItem.data.name);
+            setDescription(newItem.data.description);
             closeModal();
         } catch {
             alert('error');
@@ -51,8 +56,8 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
     };
 
     const cancelEdit = () => {
-        setUserName('');
-        setDescription('');
+        // setUserName('');
+        // setDescription('');
         closeModal();
     };
 
