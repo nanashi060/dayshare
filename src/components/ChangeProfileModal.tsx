@@ -6,6 +6,10 @@ import Modal from 'react-modal';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { FC } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { auth } from '../firebase/client';
+import { signIn as signInByNextAuth } from 'next-auth/react';
 
 const customStyles: ReactModal.Styles = {
     overlay: {
@@ -33,9 +37,64 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
     const [imageUrl, setImageUrl] = useState(item.image);
     const [userName, setUserName] = useState(item.name);
     const [description, setDescription] = useState(item?.description);
+
+    const [errorMessage, setErrorMessage] = useState('');
     const { data: session } = useSession();
-    const id = session?.user?.uid;
+    const userId = session?.user?.uid;
     console.log('item', item);
+
+    const onImageChange = (e: any) => {
+        const file = e.target.files[0];
+        setImageUrl(file);
+    };
+
+    const saveImage = async () => {
+        if (!imageUrl) return;
+        // upload image to Firebase Storage
+        const storage = getStorage();
+        const imagePath = `userImages/${userId}/profile_picture.png`;
+        const storageRef = ref(storage, imagePath);
+        const uploadTask = uploadBytesResumable(storageRef, imageUrl);
+
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                // handle progress
+                // you can use snapshot to display the upload progress to the user
+            },
+            (error) => {
+                // handle error
+                setErrorMessage(error.message);
+            },
+            async () => {
+                // handle success
+                // const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                // await updateProfile(userCredential.user, {
+                //     displayName: username,
+                //     photoURL: downloadURL,
+                // });
+                // const idToken = await userCredential.user.getIdToken();
+                // await signInByNextAuth('credentials', { idToken, callbackUrl: '/' });
+            }
+        );
+    };
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (userId) {
+                if (user) {
+                    // ユーザーがログインしている場合
+
+                    const storage = getStorage();
+                    const storageRef = ref(storage, `userImages/${userId}/profile_picture.png`);
+                    getDownloadURL(storageRef).then(setImageUrl);
+                } else {
+                    // ユーザーがログアウトしている、またはログインしていない場合
+                    console.log('ユーザーがログインしていません');
+                }
+            }
+        });
+    }, [userId]);
 
     const closeAndSave = async () => {
         try {
@@ -43,10 +102,11 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
                 imageUrl,
                 userName,
                 description,
-                id,
+                userId,
             });
-            const newItem = await axios.get(`/api/profileData/${id}`);
-            setImageUrl(newItem.data.imageUrl);
+            const newItem = await axios.get(`/api/profileData/${userId}`);
+            saveImage();
+            setImageUrl(newItem.data.image);
             setUserName(newItem.data.name);
             setDescription(newItem.data.description);
             closeModal();
@@ -56,8 +116,8 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
     };
 
     const cancelEdit = () => {
-        // setUserName('');
-        // setDescription('');
+        setUserName(item.name);
+        setDescription(item.description);
         closeModal();
     };
 
@@ -68,7 +128,12 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
             style={customStyles}
             contentLabel="Profile Modal"
         >
-            <div className="flex items-center justify-center">
+            <div>
+                <input
+                    className="flex items-center justify-center"
+                    type="file"
+                    onChange={onImageChange}
+                />
                 <Image
                     src={imageUrl}
                     alt="Profile"
@@ -77,6 +142,7 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
                     height={96}
                 />
             </div>
+
             <form className="text-center">
                 <label>
                     <span className="text-sm text-gray-5F mr-60">

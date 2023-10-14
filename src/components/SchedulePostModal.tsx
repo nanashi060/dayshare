@@ -12,7 +12,6 @@ import { db } from '../firebase/client';
 import axios from 'axios';
 import useSWR from 'swr';
 
-
 const customStyles: ReactModal.Styles = {
     overlay: {
         position: 'fixed',
@@ -45,8 +44,8 @@ const App: React.FC = () => {
     const router = useRouter();
 
     const userId = session?.user;
-    const { data:profileData }: any = useSWR(`/api/profileData/${userId}`, axios);
-    console.log("userId", userId);
+    const { data: profileData }: any = useSWR(`/api/profileData/${userId}`, axios);
+    // console.log('userId', userId);
 
     useEffect(() => {
         if (session) {

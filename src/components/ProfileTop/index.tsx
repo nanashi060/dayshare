@@ -19,12 +19,13 @@ export const ProfileTop: React.FC = () => {
     const [imageUrl, setImageUrl] = useState('');
     const [id, setId] = useState<string>('');
     const [userName, setUserName] = useState('');
-
     const [description, setDescription] = useState('');
 
     const { data: session } = useSession();
     const userId = session?.user?.uid;
     console.log('userId', userId);
+
+    const storage = getStorage();
 
     const { data, mutate }: any = useSWR(`/api/profileData/${userId}`, axios);
     const tmpData = useMemo(() => {
@@ -35,21 +36,19 @@ export const ProfileTop: React.FC = () => {
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // ユーザーがログインしている場合
-                const photoURL = user.photoURL;
-                setImageUrl(photoURL || '');
-                if (photoURL) {
-                    console.log('ユーザーの photoURL:', photoURL);
+            if (userId) {
+                if (user) {
+                    // ユーザーがログインしている場合
+
+                    const storageRef = ref(storage, `userImages/${userId}/profile_picture.png`);
+                    getDownloadURL(storageRef).then(setImageUrl);
                 } else {
-                    console.log('photoURL が設定されていません');
+                    // ユーザーがログアウトしている、またはログインしていない場合
+                    console.log('ユーザーがログインしていません');
                 }
-            } else {
-                // ユーザーがログアウトしている、またはログインしていない場合
-                console.log('ユーザーがログインしていません');
             }
         });
-    }, []);
+    }, [userId]);
 
     useEffect(() => {
         // profileData のデータが取得された後にステートを更新

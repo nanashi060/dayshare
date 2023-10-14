@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         }
     } else if (req.method === 'PUT') {
-        const { imageUrl, userName, description, id } = req.body;
+        const { imageUrl, userName, description, userId: id } = req.body;
         const ref = await db.collection(COLLECTION_NAME).doc(id);
         if (ref === undefined) {
             return res.status(400).json({ message: 'error' });
