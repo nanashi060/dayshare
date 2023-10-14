@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 .where('cardId', '==', data.id)
                 .get();
 
-            data.likeNum = likeCount.size || 0; // 各ドキュメントにlikeNumを追加（カウントが0の場合でもセット）
+            data.likeNum = likeCount.size || 0;
         }
 
         res.status(200).json(uniqueData);
@@ -50,7 +50,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 .where('cardId', '==', item.id)
                 .get();
 
-            item.likeNum = likeCount.size || 0; // 各ドキュメントにlikeNumを追加（カウントが0の場合でもセット）
+            item.likeNum = likeCount.size || 0;
         }
 
         res.status(200).json(data);
