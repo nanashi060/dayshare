@@ -1,47 +1,35 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState, useEffect, useMemo } from 'react';
-import Modal from 'react-modal';
+import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import axios from 'axios';
 import useSWR from 'swr';
 import { ChangeProfileModal } from '../ChangeProfileModal';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebase/client';
 import { Loading } from './Loading';
-import { profileEnd } from 'console';
 
 export const ProfileTop: React.FC = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [imageUrl, setImageUrl] = useState('');
     const [id, setId] = useState<string>('');
     const [userName, setUserName] = useState('');
     const [description, setDescription] = useState('');
-
+    const [createObjectURL, setCreateObjectURL] = useState('');
     const { data: session } = useSession();
     const userId = session?.user?.uid;
-    console.log('userId', userId);
-
     const storage = getStorage();
-
     const { data, mutate }: any = useSWR(`/api/profileData/${userId}`, axios);
-    const tmpData = useMemo(() => {
-        return data ? data.data : {};
-    }, [data]);
-
-    console.log('tmpData', tmpData);
+    const tmpData = data ? data.data : {};
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (userId) {
                 if (user) {
                     // ユーザーがログインしている場合
-
                     const storageRef = ref(storage, `userImages/${userId}/profile_picture.png`);
-                    getDownloadURL(storageRef).then(setImageUrl);
+                    getDownloadURL(storageRef).then(setCreateObjectURL);
                 } else {
                     // ユーザーがログアウトしている、またはログインしていない場合
                     console.log('ユーザーがログインしていません');
@@ -56,19 +44,7 @@ export const ProfileTop: React.FC = () => {
         setId(tmpData.id);
         setUserName(tmpData.name);
         setDescription(tmpData.description);
-    }, [data]); // tmpData が変更されたときに useEffect が実行される
-
-    const handleRefreshData = async () => {
-        // データを再取得するために API を呼び出す
-        try {
-            const response = await axios.get(`/api/profileData/${userId}`);
-            mutate(`/api/profileData/${userId}`, response.data, false); // キャッシュを更新しつつ再描画を抑制
-        } catch (error) {
-            console.error('データの再取得エラー:', error);
-        }
-    };
-
-    const item = { image: imageUrl, ...tmpData };
+    }, [data]);
 
     if (!data) {
         return <Loading />;
@@ -80,10 +56,12 @@ export const ProfileTop: React.FC = () => {
                 isOpen={modalIsOpen}
                 closeModal={() => {
                     setModalIsOpen(false);
-                    handleRefreshData();
+                    mutate(`/api/profileData/${userId}`);
                 }}
                 openModal={() => setModalIsOpen(true)}
-                item={item}
+                item={{ image: createObjectURL, ...tmpData }}
+                createObjectURL={createObjectURL}
+                setCreateObjectURL={setCreateObjectURL}
             />
             <button
                 onClick={() => {
@@ -95,7 +73,7 @@ export const ProfileTop: React.FC = () => {
             </button>
 
             <Image
-                src={imageUrl}
+                src={createObjectURL}
                 alt=""
                 width={120}
                 height={120}

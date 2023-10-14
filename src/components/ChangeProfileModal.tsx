@@ -31,9 +31,23 @@ const customStyles: ReactModal.Styles = {
     },
 };
 
-type Prop = { isOpen: boolean; closeModal: () => void; openModal: () => void; item: any };
+type Prop = {
+    isOpen: boolean;
+    closeModal: () => void;
+    openModal: () => void;
+    item: any;
+    createObjectURL: any;
+    setCreateObjectURL: any;
+};
 
-export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, item }) => {
+export const ChangeProfileModal: FC<Prop> = ({
+    isOpen,
+    closeModal,
+    openModal,
+    item,
+    createObjectURL,
+    setCreateObjectURL,
+}) => {
     const [imageUrl, setImageUrl] = useState(item.image);
     const [userName, setUserName] = useState(item.name);
     const [description, setDescription] = useState(item?.description);
@@ -43,9 +57,18 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
     const userId = session?.user?.uid;
     console.log('item', item);
 
+    // const uploadToClient = (event: any) => {
+    //     if (event.target.files && event.target.files[0]) {
+    //         const file = event.target.files[0];
+    //         setImageUrl(file);
+    //         setCreateObjectURL(URL.createObjectURL(file));
+    //     }
+    // };
+
     const onImageChange = (e: any) => {
         const file = e.target.files[0];
         setImageUrl(file);
+        setCreateObjectURL(URL.createObjectURL(file));
     };
 
     const saveImage = async () => {
@@ -79,22 +102,22 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
         );
     };
 
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (userId) {
-                if (user) {
-                    // ユーザーがログインしている場合
+    // useEffect(() => {
+    //     onAuthStateChanged(auth, (user) => {
+    //         if (userId) {
+    //             if (user) {
+    //                 // ユーザーがログインしている場合
 
-                    const storage = getStorage();
-                    const storageRef = ref(storage, `userImages/${userId}/profile_picture.png`);
-                    getDownloadURL(storageRef).then(setImageUrl);
-                } else {
-                    // ユーザーがログアウトしている、またはログインしていない場合
-                    console.log('ユーザーがログインしていません');
-                }
-            }
-        });
-    }, [userId]);
+    //                 const storage = getStorage();
+    //                 const storageRef = ref(storage, `userImages/${userId}/profile_picture.png`);
+    //                 getDownloadURL(storageRef).then(setImageUrl);
+    //             } else {
+    //                 // ユーザーがログアウトしている、またはログインしていない場合
+    //                 console.log('ユーザーがログインしていません');
+    //             }
+    //         }
+    //     });
+    // }, [userId]);
 
     const closeAndSave = async () => {
         try {
@@ -104,11 +127,9 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
                 description,
                 userId,
             });
-            const newItem = await axios.get(`/api/profileData/${userId}`);
             saveImage();
-            setImageUrl(newItem.data.image);
-            setUserName(newItem.data.name);
-            setDescription(newItem.data.description);
+            // setUserName(item.name);
+            // setDescription(item.description);
             closeModal();
         } catch {
             alert('error');
@@ -118,6 +139,7 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
     const cancelEdit = () => {
         setUserName(item.name);
         setDescription(item.description);
+        setCreateObjectURL(item.image);
         closeModal();
     };
 
@@ -137,7 +159,7 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
                 />
                 <label htmlFor="imageInput">
                     <Image
-                        src={imageUrl}
+                        src={createObjectURL}
                         alt="Profile"
                         className="rounded-full mx-auto object-cover mb-2"
                         width={96}
