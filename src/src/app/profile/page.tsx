@@ -1,5 +1,5 @@
-import { CardList } from 'components/PieChart/CardList';
-import { ProfileTop } from 'components/ProfileTop';
+import { ProfileCardList } from 'components/Profile/ProfileCardList';
+import { ProfileTop } from 'components/Profile/ProfileTop';
 import Sidebar from 'components/SidebarComponent';
 
 const Profile = async () => {
@@ -9,7 +9,7 @@ const Profile = async () => {
                 <Sidebar />
                 <div className="w-full">
                     <ProfileTop />
-                    <CardList />
+                    <ProfileCardList />
                 </div>
             </div>
         </main>
