@@ -1,7 +1,6 @@
 import { Card } from '../PieChart/Card';
 import axios from 'axios';
 import useSWR from 'swr';
-import { searchUserData } from '../../helpers/firestore';
 
 export const SearchCardList = ({ searchTerm }: { searchTerm: string }) => {
     const fetcher = (url: string) => axios.get(url).then((res) => res.data);

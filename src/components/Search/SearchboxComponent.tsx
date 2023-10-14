@@ -1,6 +1,5 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -33,7 +32,12 @@ export const Searchbox = () => {
                     paddingRight: '16px',
                 }}
             />
-            <button onClick={handleSearch}>検索</button>
+            <button
+                onClick={handleSearch}
+                className="text-kusumi-pink bg-white py-1.5 px-2 rounded-md border-kusumi-pink border hover:duration-100 hover:text-white hover:bg-kusumi-pink active:border-kusumi-pink"
+            >
+                検索
+            </button>
         </div>
     );
 };
