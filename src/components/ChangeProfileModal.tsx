@@ -130,17 +130,20 @@ export const ChangeProfileModal: FC<Prop> = ({ isOpen, closeModal, openModal, it
         >
             <div>
                 <input
-                    className="flex items-center justify-center"
+                    className="mx-auto items-center hidden opacity-0 rounded-full "
                     type="file"
                     onChange={onImageChange}
+                    id="imageInput"
                 />
-                <Image
-                    src={imageUrl}
-                    alt="Profile"
-                    className="rounded-full object-cover mt-5 mb-2"
-                    width={96}
-                    height={96}
-                />
+                <label htmlFor="imageInput">
+                    <Image
+                        src={imageUrl}
+                        alt="Profile"
+                        className="rounded-full mx-auto object-cover mb-2"
+                        width={96}
+                        height={96}
+                    />
+                </label>
             </div>
 
             <form className="text-center">
