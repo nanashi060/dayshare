@@ -9,6 +9,8 @@ import { FaCirclePlus } from 'react-icons/fa6';
 import { useRouter } from 'next/navigation';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase/client';
+import axios from 'axios';
+import useSWR from 'swr';
 
 const customStyles: ReactModal.Styles = {
     overlay: {
@@ -40,6 +42,10 @@ const App: React.FC = () => {
     const [category, setCategory] = useState('');
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+
+    const userId = session?.user;
+    const { data: profileData }: any = useSWR(`/api/profileData/${userId}`, axios);
+    // console.log('userId', userId);
 
     useEffect(() => {
         if (session) {
