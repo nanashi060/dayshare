@@ -9,7 +9,6 @@ const Home = async () => {
         <main>
             <ClientComponent />
             <ServerComponent />
-            <TestComponent />
             <CardList />
             <Sidebar />
         </main>
