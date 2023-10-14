@@ -41,7 +41,7 @@ const ActionButton: FC<ActionButtonProps> = ({ href, onClick, children }) => (
     <a
         href={href}
         onClick={onClick}
-        className="bg-kusumi-pink text-white pt-4 pb-4 justify-center rounded-xl w-52 flex text-md mb-6 mx-auto cursor: pointer; hover:scale-105 hover:duration-300 gap-3 items-center"
+        className="bg-kusumi-pink text-white pt-4 pb-4 justify-center rounded-xl w-52 flex text-md mb-6 cursor: pointer; hover:scale-105 hover:duration-300 gap-3 items-center"
     >
         {children}
     </a>
