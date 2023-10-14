@@ -2,6 +2,7 @@ import { CardList } from 'components/PieChart/CardList';
 import ClientComponent from '../../components/ClientComponent';
 import ServerComponent from '../../components/ServerComponent';
 import Sidebar from '../../components/SidebarComponent';
+import { Header } from '../../../src/components/header';
 import SchedulePostComponent from '../../components/SchedulePostModal';
 
 const Home = async () => {
@@ -11,7 +12,10 @@ const Home = async () => {
             <ServerComponent />
             <div className="flex">
                 <Sidebar />
-                <CardList />
+                <div className='mx-auto w-[70%]'>
+                    <Header />
+                    <CardList />
+                </div>
             </div>
         </main>
     );
