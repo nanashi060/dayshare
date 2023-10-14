@@ -13,8 +13,8 @@ export const Tag: FC<prop> = ({ titleList }) => {
                 {titleList.map((title: string) => (
                     <button
                         key={title}
-                        className="py-1 font-normal text-xs hover:bg-slate-800 rounded-[12px] text-[#5F5F5F] px-[6px] bg-[#D9D9D9]"
-                        onClick={() => router.push(`/api/post/${title}`)}
+                        className="py-1 font-normal text-xs hover:bg-slate-800 rounded-xl text-[#5F5F5F] px-[6px] bg-[#D9D9D9]"
+                        onClick={() => router.push(`/search/${title}`)}
                     >
                         {title}
                     </button>
