@@ -11,11 +11,13 @@ import {
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { auth } from '../../../firebase/client';
 import { signIn as signInByNextAuth } from 'next-auth/react';
+import axios from 'axios';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+    const [id, setId] = useState('');
     const [image, setImage] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -58,6 +60,13 @@ const SignUp = () => {
                     await signInByNextAuth('credentials', { idToken, callbackUrl: '/' });
                 }
             );
+
+            //firestoreにユーザー情報を保存
+            await axios.post('/api/profileData', {
+                username,
+                id,
+                userId,
+            });
         } catch (e: any) {
             console.error(e);
             setErrorMessage(e.message);
@@ -85,6 +94,13 @@ const SignUp = () => {
                     value={username}
                     onChange={(event) => setUsername(event.target.value)}
                     placeholder="ユーザー名"
+                    className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                />
+                <input
+                    type="text"
+                    value={id}
+                    onChange={(event) => setId(event.target.value)}
+                    placeholder="ID"
                     className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                 />
                 <input
