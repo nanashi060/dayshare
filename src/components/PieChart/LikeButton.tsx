@@ -31,6 +31,7 @@ export const LikeButton: FC<Prop> = ({ data }) => {
                     console.error('Error occurred:', error);
                 });
         }
+        console.log(data);
     }, [data, session]);
 
     const handleLike = () => {
@@ -52,7 +53,7 @@ export const LikeButton: FC<Prop> = ({ data }) => {
     };
 
     return (
-        <div className="flex  items-center pl-3 gap-x-[6px]">
+        <div className="flex  items-center pl-3 gap-x-[6px] cursor-pointer">
             <FaRegFaceGrinHearts onClick={handleLike} color={liked ? 'pink' : '#5F5F5F'} />
             <p className="text-[#5F5F5F] text-sm font-normal">{likeCount}</p>
         </div>
