@@ -62,10 +62,6 @@ const App: React.FC = () => {
         }
     }, [session]);
 
-    const openModal = () => {
-        setModalIsOpen(true);
-    };
-
     const closeModal = () => {
         setModalIsOpen(false);
         router.push('./');
@@ -163,6 +159,7 @@ const App: React.FC = () => {
                     />
                     <div className="relative inline-flex">
                         <select
+                            onChange={(e) => setCategory(e.target.value)}
                             className="border border-gray-5F rounded-xl text-gray-5F h-9 pr-3 pl-10 text-base bg-white hover:border-gray-400 focus:outline-none appearance-none"
                             style={{
                                 backgroundImage: "url('/caret-down-solid.svg')",
