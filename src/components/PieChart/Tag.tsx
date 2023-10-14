@@ -10,9 +10,9 @@ export const Tag: FC<prop> = ({ titleList }) => {
     return (
         <>
             <div className="flex gap-x-1">
-                {titleList.map((title: string) => (
+                {titleList.map((title: string, index: number) => (
                     <button
-                        key={title}
+                        key={`${title}-${index}`}
                         className="py-1 font-normal text-xs hover:bg-slate-800 rounded-xl text-[#5F5F5F] px-[6px] bg-[#D9D9D9]"
                         onClick={() => router.push(`/search/${title}`)}
                     >
