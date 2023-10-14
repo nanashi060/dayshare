@@ -38,7 +38,7 @@ export default function Sidebar() {
     const { data: session } = useSession();
 
     return (
-        <div className="p-6 w-1/4 bg-white text-left -ml-0 mr-auto h-screen min-w-max border-r border-gray-D9">
+        <div className="p-6 w-1/4 bg-white text-left h-screen min-w-max border-r border-gray-D9">
             <div className="w-12">
                 <a href="/">
                     <FaChartPie size={48} />
