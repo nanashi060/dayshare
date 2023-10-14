@@ -3,20 +3,33 @@
 import React, { FC, ReactElement } from 'react';
 import { FaChartPie, FaHouse, FaSistrix, FaUser, FaCalendarPlus } from 'react-icons/fa6';
 import { useSession, signOut } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 
 interface NavigationLinkProps {
     href: string;
     icon: ReactElement;
     children: React.ReactNode;
 }
+export const clsx = (...classes: string[]) => {
+    return classes.filter(Boolean).join(' ');
+};
 
-const NavigationLink: FC<NavigationLinkProps> = ({ href, icon, children }) => (
-    <div className="text-gray-5F text-lg mb-7 hover:opacity-70 hover:duration-200 cursor: pointer">
-        <a href={href} className="flex items-center gap-5">
-            {icon} {children}
-        </a>
-    </div>
-);
+const NavigationLink: FC<NavigationLinkProps> = ({ href, icon, children }) => {
+    const pathname = usePathname();
+    return (
+        <div className=" text-lg mb-7 cursor: pointer">
+            <a
+                href={href}
+                className={clsx(
+                    'flex items-center gap-5  hover:opacity-70 hover:duration-200',
+                    href == pathname ? 'text-kusumi-pink' : 'text-gray-5F'
+                )}
+            >
+                {icon} {children}
+            </a>
+        </div>
+    );
+};
 
 interface ActionButtonProps {
     href?: string;
