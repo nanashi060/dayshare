@@ -4,6 +4,7 @@ import ServerComponent from '../../components/ServerComponent';
 import Sidebar from '../../components/SidebarComponent';
 import { Header } from '../../components/header';
 import { SeoHead } from '../../components/seohead';
+import { Contents } from 'components/PieChart/Contents';
 
 const Home = async () => {
     const pageOgImg: string = `${process.env.NEXT_PUBLIC_DEFAULT_SITE_URL}`;
@@ -20,9 +21,9 @@ const Home = async () => {
             <ServerComponent />
             <div className="flex">
                 <Sidebar />
-                <div className="mx-auto w-[70%]">
+                <div className="mx-auto w-full">
                     <Header />
-                    <CardList />
+                    <Contents />
                 </div>
             </div>
         </main>
