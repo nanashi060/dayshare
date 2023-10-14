@@ -6,45 +6,10 @@ import { PieChart, Pie, Cell } from 'recharts';
 type Prop = { data: any };
 
 export const CustomPieChart: FC<Prop> = ({ data: tmpData }) => {
-    // const schedule = [
-    //     { name: '睡眠', startTime: 0, endTime: 11 },
-    //     { name: '仕事', startTime: 11, endTime: 18 },
-    //     { name: 'レクリエーション', startTime: 18, endTime: 24 },
-    // ];
-
-    function timeToDegree(time: string): number {
-        const [hours, minutes] = time.split(':').map(Number);
-
-        if (
-            hours < 0 ||
-            hours >= 24 ||
-            minutes < 0 ||
-            minutes >= 60 ||
-            isNaN(hours) ||
-            isNaN(minutes)
-        ) {
-            throw new Error('Invalid time format');
-        }
-
-        const totalMinutes = hours * 60 + minutes;
-        const degrees = (totalMinutes / (24 * 60)) * 360;
-
-        return degrees;
-    }
-
-    const startAngle = timeToDegree(tmpData.schedule[0].startTime);
-    console.log('startAngle', startAngle);
-
     const convertTo24Hour = (time: string) => {
         const [hours, minutes] = time.split(':').map(Number);
         return hours + minutes / 60;
     };
-
-    // 各アクティビティの時間を計算;
-    // const data = tmpData.schedule.map((item: any) => ({
-    //     name: item.activity,
-    //     value: convertTo24Hour(item.endTime) - convertTo24Hour(item.startTime),
-    // }));
 
     // 空き時間を計算
     const filledSchedule: any[] = [];
@@ -53,31 +18,25 @@ export const CustomPieChart: FC<Prop> = ({ data: tmpData }) => {
     tmpData.schedule.forEach((item: any) => {
         const startTime = convertTo24Hour(item.startTime);
         const endTime = convertTo24Hour(item.endTime);
-        const duration = () => {
-            if (endTime < startTime) {
-                return endTime + 24 - startTime;
-            } else {
-                return endTime - startTime;
-            }
-        };
 
+        //前の活動終了時間と現在の活動開始時間が異なる場合は空き時間をプッシュ
         if (startTime > lastEndTime) {
             filledSchedule.push({
                 name: '',
-                value: duration,
+                value: startTime - lastEndTime,
                 isEmpty: true,
             });
         }
-
+        //現在の活動情報をプッシュ
         filledSchedule.push({
             name: item.activity,
-            value: duration,
+            value: endTime - startTime,
             isEmpty: false,
         });
 
         lastEndTime = endTime;
     });
-
+    //最後の活動終了時間から24時までの空き時間をプッシュ
     if (lastEndTime < 24) {
         filledSchedule.push({
             name: '',
@@ -86,12 +45,12 @@ export const CustomPieChart: FC<Prop> = ({ data: tmpData }) => {
         });
     }
 
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF8042', '#FF8042'];
 
     const RADIAN = Math.PI / 180;
     const renderLabel = (props: any) => {
         // console.log("props", props);
-
+        //innnerRadiusとouterRadius両方ともいらない
         const { cx, cy, midAngle, innerRadius, outerRadius, percent, index } = props;
 
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -105,7 +64,7 @@ export const CustomPieChart: FC<Prop> = ({ data: tmpData }) => {
                 fill="black"
                 textAnchor={x > cx ? 'start' : 'end'}
                 dominantBaseline="central"
-                fontSize={15}
+                fontSize={10}
                 style={{ fontWeight: '900' }}
             >
                 {filledSchedule[index].name.length <= 5 ? (
@@ -121,18 +80,19 @@ export const CustomPieChart: FC<Prop> = ({ data: tmpData }) => {
             </text>
         );
     };
+
     return (
         <PieChart width={200} height={200}>
             <Pie
                 data={filledSchedule}
                 dataKey="value"
                 nameKey="name"
+                startAngle={90} // 0時の位置を360度として開始
+                endAngle={-270} // 24時の位置を360度として終了
                 cx="50%"
                 cy="50%"
                 outerRadius={85}
                 isAnimationActive={false}
-                startAngle={startAngle}
-                endAngle={startAngle + 360}
                 label={renderLabel}
                 labelLine={false}
             >
