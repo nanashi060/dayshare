@@ -10,15 +10,16 @@ export const Card: FC<porp> = ({ publisherData }) => {
     if (!publisherData) {
         return <div>Loading...</div>;
     }
-    // const titleList = publisherData.map((item: any) => item.tags);
-    const titleList = publisherData.tags;
+    const uniqueId = publisherData.userId;
+
     return (
         <div className="w-[200px]">
             <Publisher data={publisherData} />
             <CustomPieChart data={publisherData} />
-            <Tag titleList={titleList} />
+            <Tag titleList={publisherData.tags} />
             <div className="mt-2">
-                <LikeButton data={publisherData} />
+                {/* LikeButtonに渡すデータを変更 */}
+                <LikeButton data={{ id: uniqueId, likeNum: publisherData.likeNum }} />
             </div>
         </div>
     );

@@ -34,14 +34,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             ...doc.docs,
         ];
 
-        const uniqueData = Array.from(new Set(allDocs.map((doc) => doc.id))).map((id) =>
-            allDocs.find((doc) => doc.id === id)!.data()
-        );
+        const uniqueData = Array.from(new Set(allDocs.map((doc) => doc.id))).map((id) => {
+            const docData = allDocs.find((doc) => doc.id === id);
+            return { id: docData!.id, ...docData!.data() };
+        });
 
         res.status(200).json(uniqueData);
     } else {
         const doc = await db.collection(COLLECTION_NAME).orderBy('timestamp', 'desc').get();
-        const data = doc.docs.map((doc) => doc.data());
+        const data = doc.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
         res.status(200).json(data);
     }
 }

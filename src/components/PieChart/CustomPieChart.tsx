@@ -97,12 +97,10 @@ export const CustomPieChart: FC<Prop> = ({ data: tmpData }) => {
                 labelLine={false}
             >
                 {filledSchedule.map((item, index) => (
-                    <>
-                        <Cell
-                            key={`cell-${index}`}
-                            fill={item.isEmpty ? '#E0E0E0' : COLORS[index % COLORS.length]}
-                        />
-                    </>
+                    <Cell
+                        key={`cell-${index}`}
+                        fill={item.isEmpty ? '#E0E0E0' : COLORS[index % COLORS.length]}
+                    />
                 ))}
             </Pie>
         </PieChart>
