@@ -9,8 +9,10 @@ const Home = async () => {
         <main>
             <ClientComponent />
             <ServerComponent />
-            <CardList />
-            <Sidebar />
+            <div className="flex">
+                <Sidebar />
+                <CardList />
+            </div>
         </main>
     );
 };
