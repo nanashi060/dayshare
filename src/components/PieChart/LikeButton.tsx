@@ -54,8 +54,8 @@ export const LikeButton: FC<Prop> = ({ data }) => {
 
     return (
         <div className="flex  items-center pl-3 gap-x-[6px] cursor-pointer">
-            <FaRegFaceGrinHearts onClick={handleLike} color={liked ? 'pink' : '#5F5F5F'} />
-            <p className="text-[#5F5F5F] text-sm font-normal">{likeCount}</p>
+            <FaRegFaceGrinHearts onClick={handleLike} color={liked ? '#ff3a96' : '#5F5F5F'} />
+            <p className="text-sm font-normal" onClick={handleLike} style={{color: liked ? '#ff3a96' : '#5F5F5F'}}>{likeCount}</p>
         </div>
     );
 };
