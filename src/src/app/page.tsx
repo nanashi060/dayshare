@@ -3,7 +3,6 @@ import ClientComponent from '../../components/ClientComponent';
 import ServerComponent from '../../components/ServerComponent';
 import Sidebar from '../../components/SidebarComponent';
 import { Header } from '../../components/header';
-import SchedulePostComponent from '../../components/SchedulePostModal';
 import { SeoHead } from '../../components/seohead';
 
 const Home = async () => {
