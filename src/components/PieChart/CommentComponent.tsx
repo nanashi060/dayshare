@@ -107,16 +107,16 @@ export const CommentComponent: React.FC<Props> = ({ postID }) => {
         }
 
         try {
-            const response = await axios.post('/api/comments', {
+            await axios.post('/api/comments', {
                 postID,
                 userID: session.user.uid,
                 text,
                 parentCommentID: finalParentCommentID,
             });
 
-            setComments((prev) =>
-                Array.isArray(prev) ? [...prev, response.data] : [response.data]
-            );
+            const response = await axios.get(`/api/comments?postID=${postID}`);
+            setComments(response.data);
+
             setText('');
             setReplyTo(undefined);
         } catch (error) {
