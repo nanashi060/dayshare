@@ -25,8 +25,8 @@ export const Publisher: React.FC<Prop> = ({ data }) => {
     const formatTime = formatDate(date);
     const [imageUrl, setImageUrl] = useState(icon_image || '/default.png');
     const fetcher = (url: string) => axios.get(url).then((res) => res.data);
-    const { data: profileData }: any = useSWR(`/api/profileData/${userId}`, fetcher);
-
+    const { data: tmpProfileData }: any = useSWR(`/api/profileData/${userId}`, fetcher);
+    const profileData = tmpProfileData?.data;
     console.log(profileData);
 
     const name = profileData?.name;
