@@ -11,7 +11,7 @@ export const SearchCardList = ({ searchTerm }: { searchTerm: string }) => {
     const publisherData: any = tmpUserData;
 
     if (!publisherData) {
-        return <Loading />;
+        return <div className='w-full'><Loading /></div>;
     }
 
     return (
