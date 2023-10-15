@@ -96,12 +96,22 @@ export const CommentComponent: React.FC<Props> = ({ postID }) => {
 
     const postComment = async (parentCommentID?: string) => {
         if (!text || !session?.user?.uid) return;
+
+        let finalParentCommentID = parentCommentID;
+
+        if (parentCommentID) {
+            const parentComment = comments.find((comment) => comment.id === parentCommentID);
+            if (parentComment?.parentCommentID) {
+                finalParentCommentID = parentComment.parentCommentID;
+            }
+        }
+
         try {
             const response = await axios.post('/api/comments', {
                 postID,
                 userID: session.user.uid,
                 text,
-                parentCommentID,
+                parentCommentID: finalParentCommentID,
             });
 
             setComments((prev) =>
