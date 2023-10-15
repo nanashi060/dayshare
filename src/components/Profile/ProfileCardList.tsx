@@ -3,13 +3,17 @@
 import { Card } from '../PieChart/Card';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import useSWR from 'swr';
 import { Loading } from '../PieChart/CardList/Loading';
 
-export const ProfileCardList = () => {
-    const { data: session } = useSession();
-    const userId = session?.user?.uid;
+type Prop = {
+    userId: string;
+};
+
+export const ProfileCardList: FC<Prop> = ({ userId }) => {
+    // const { data: session } = useSession();
+    // const userId = session?.user?.uid;
     // const fetcher = (url: string) => axios.get(url).then((res) => res.data);
     const { data: tmpUserData, mutate, error }: any = useSWR(`/api/userData/${userId}`, axios);
     console.log('idaa', userId);

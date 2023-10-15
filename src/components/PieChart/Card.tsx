@@ -25,23 +25,24 @@ export const Card: FC<porp> = ({ publisherData }) => {
 
     return (
         <>
-            {selectedItem && (
-                <PostDetailModal
-                    isOpen={isOpen}
-                    closeModal={() => setIsOpen(false)}
-                    openModal={() => setIsOpen(true)}
-                    item={selectedItem}
-                />
-            )}
-            <button className="w-[200px]" onClick={() => openModal(newItem)}>
+            <div>
+                {selectedItem && (
+                    <PostDetailModal
+                        isOpen={isOpen}
+                        closeModal={() => setIsOpen(false)}
+                        openModal={() => setIsOpen(true)}
+                        item={selectedItem}
+                    />
+                )}
                 {/* <PostDetail item={publisherData} /> */}
-
                 <Publisher data={publisherData} />
-                <CustomPieChart data={publisherData} />
-            </button>
-            <Tag titleList={publisherData.tags} />
-            <div className="mt-2">
-                <LikeButton data={{ id: uniqueId, likeNum: likeNum }} />
+                <button className="w-[200px]" onClick={() => openModal(newItem)}>
+                    <CustomPieChart data={publisherData} />
+                </button>
+                <Tag titleList={publisherData.tags} />
+                <div className="mt-2">
+                    <LikeButton data={{ id: uniqueId, likeNum: likeNum }} />
+                </div>
             </div>
         </>
     );

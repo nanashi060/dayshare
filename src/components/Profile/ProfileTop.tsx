@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { useSession } from 'next-auth/react';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import axios from 'axios';
@@ -11,17 +11,21 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebase/client';
 import { Loading } from './Loading';
 
-export const ProfileTop: React.FC = () => {
+type Prop = { userId: string };
+
+export const ProfileTop: FC<Prop> = ({ userId }) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [id, setId] = useState<string>('');
     const [userName, setUserName] = useState('');
     const [description, setDescription] = useState('');
     const [createObjectURL, setCreateObjectURL] = useState('');
-    const { data: session } = useSession();
-    const userId = session?.user?.uid;
     const storage = getStorage();
+
     const { data, mutate }: any = useSWR(`/api/profileData/${userId}`, axios);
     const tmpData = data ? data.data : {};
+
+    const { data: session } = useSession();
+    const ownId = session?.user?.uid;
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -37,6 +41,25 @@ export const ProfileTop: React.FC = () => {
             }
         });
     }, [userId]);
+
+    // useEffect(() => {
+    //     onAuthStateChanged(auth, (user) => {
+    //         if (userId) {
+    //             if (user) {
+    //                 const storageRef = ref(storage, `userImages/${userId}/profile_picture.png`);
+    //                 getDownloadURL(storageRef)
+    //                     .then((url) => {
+    //                         setCreateObjectURL(url); // プロミスが解決された後にURLをステートに設定
+    //                     })
+    //                     .catch((error) => {
+    //                         console.error('Error getting download URL:', error);
+    //                     });
+    //             } else {
+    //                 console.log('ユーザーがログインしていません');
+    //             }
+    //         }
+    //     });
+    // }, [userId]);
 
     useEffect(() => {
         // profileData のデータが取得された後にステートを更新
@@ -63,23 +86,29 @@ export const ProfileTop: React.FC = () => {
                 createObjectURL={createObjectURL}
                 setCreateObjectURL={setCreateObjectURL}
             />
-            <button
-                onClick={() => {
-                    setModalIsOpen(true);
-                }}
-                className="text-gray-5F ml-auto relative block mr-[5vw] top-12 text-xs font-normal hover:bg-[#b9b9b9] text-center bg-gray-D9 py-1 px-2 rounded-[10px]"
-            >
-                プロフィールを編集
-            </button>
+            {ownId == userId ? (
+                <button
+                    onClick={() => {
+                        setModalIsOpen(true);
+                    }}
+                    className="text-gray-5F ml-auto relative block mr-[5vw] top-12 text-xs font-normal hover:bg-[#b9b9b9] text-center bg-gray-D9 py-1 px-2 rounded-[10px]"
+                >
+                    プロフィールを編集
+                </button>
+            ) : (
+                <div></div>
+            )}
 
-            <Image
-                src={createObjectURL}
-                alt=""
-                width={120}
-                height={120}
-                style={{ objectFit: 'cover', borderRadius: '50%' }}
-                className="mx-auto"
-            />
+            {createObjectURL ? (
+                <Image
+                    src={createObjectURL}
+                    alt=""
+                    width={120}
+                    height={120}
+                    style={{ objectFit: 'cover', borderRadius: '50%' }}
+                    className="mx-auto"
+                />
+            ) : null}
 
             <h3 className=" font-medium text-center text-lg text-black pt-3">{userName}</h3>
             <p className=" text-gray-5F text-center font-normal text-base leading-none">{id}</p>
