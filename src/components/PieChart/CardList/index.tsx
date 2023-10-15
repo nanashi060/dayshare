@@ -17,7 +17,7 @@ export const CardList = () => {
 
     return (
         <>
-            <div className="grid-cols-3 mx-auto grid gap-y-10 place-items-center mt-5">
+            <div className="grid-cols-3 mx-auto grid gap-y-10 place-items-center my-5">
                 {publisherData &&
                     publisherData.map((item: any) => <Card key={item.id} publisherData={item} />)}
             </div>
