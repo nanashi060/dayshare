@@ -55,7 +55,12 @@ export default function Sidebar() {
         <div className="p-6 w-1/4 bg-white text-left h-screen min-w-max border-r border-gray-D9 sticky top-0">
             <div className="w-12">
                 <a href="/">
-                    <img src={'dayshare-notitle.png'} alt="DayShare-logo" width={80} height={80} />
+                <img
+                src={'https://firebasestorage.googleapis.com/v0/b/dayshare-392fb.appspot.com/o/dayshare-notitle.png?alt=media&token=dbc59a33-c09c-43c9-9c5f-fc0bac36c9dc&_gl=1*192ed0u*_ga*MzAxOTE5NTcuMTY5NjI1MzgyOQ..*_ga_CW55HF8NVT*MTY5NzMyNTc3Ny4zNC4xLjE2OTczMjU4ODkuNTQuMC4w'}
+                alt="DayShare-logo"
+                width={80}
+                height={80}
+            />
                 </a>
             </div>
             <div className="mt-10 ml-6 mb-16">

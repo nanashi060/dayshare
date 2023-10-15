@@ -19,7 +19,7 @@ const SearchPage = () => {
                 <ServerComponent />
                 <div className="flex">
                     <Sidebar />
-                    <div className="flex flex-col items-center mx-auto">
+                    <div className="flex flex-col items-center mx-auto w-[70%]">
                         <SearchCardList searchTerm={searchTerm as string} />
                     </div>
                 </div>

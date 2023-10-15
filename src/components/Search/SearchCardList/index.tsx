@@ -1,6 +1,7 @@
-import { Card } from '../PieChart/Card';
+import { Card } from '../../PieChart/Card';
 import axios from 'axios';
 import useSWR from 'swr';
+import { Loading } from './Loading';
 
 export const SearchCardList = ({ searchTerm }: { searchTerm: string }) => {
     const fetcher = (url: string) => axios.get(url).then((res) => res.data);
@@ -10,11 +11,11 @@ export const SearchCardList = ({ searchTerm }: { searchTerm: string }) => {
     const publisherData: any = tmpUserData;
 
     if (!publisherData) {
-        return <div>Loading...</div>;
+        return <div className='w-full'><Loading /></div>;
     }
 
     return (
-        <div className="grid-cols-3 mx-auto w-[700px] grid gap-y-10 place-items-center">
+        <div className="grid-cols-3 mx-auto grid gap-y-10 place-items-center my-5 w-full">
             {publisherData &&
                 publisherData.map((item: any, index: number) => (
                     <Card key={index} publisherData={item} />
