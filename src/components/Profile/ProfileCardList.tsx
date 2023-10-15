@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import useSWR from 'swr';
+import { Loading } from '../PieChart/CardList/Loading';
 
 export const ProfileCardList = () => {
     const { data: session } = useSession();
@@ -16,11 +17,11 @@ export const ProfileCardList = () => {
     console.log('publisherData', publisherData);
 
     if (!publisherData) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     return (
-        <div className="grid-cols-3 mx-auto w-[700px] grid gap-y-10 place-items-center">
+        <div className="grid-cols-3 mx-auto grid gap-y-10 place-items-center mt-5 mb-44">
             {publisherData &&
                 publisherData.map((item: any, index: number) => (
                     <Card key={index} publisherData={item} />
