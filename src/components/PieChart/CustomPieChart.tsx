@@ -45,7 +45,16 @@ export const CustomPieChart: FC<Prop> = ({ data: tmpData }) => {
         });
     }
 
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    const COLORS = [
+        '#0088FE',
+        '#00C49F',
+        '#FFBB28',
+        '#FF8042',
+        '#FFC0CB',
+        '#ADD8E6',
+        '#90EE90',
+        '#FFFFE0',
+    ];
 
     const RADIAN = Math.PI / 180;
     const renderLabel = (props: any) => {
@@ -53,8 +62,8 @@ export const CustomPieChart: FC<Prop> = ({ data: tmpData }) => {
 
         const { cx, cy, midAngle, innerRadius, outerRadius, percent, index } = props;
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-        const x = cx + radius * Math.cos(-midAngle * RADIAN);
-        const y = cy + radius * Math.sin(-midAngle * RADIAN);
+        const x = cx + (radius + 17) * Math.cos(-midAngle * RADIAN);
+        const y = cy + (radius + 10) * Math.sin(-midAngle * RADIAN);
 
         // 円グラフ内の文字の設定
         return (
@@ -65,15 +74,15 @@ export const CustomPieChart: FC<Prop> = ({ data: tmpData }) => {
                 textAnchor="middle"
                 dominantBaseline="central"
                 fontSize={10}
-                style={{ fontWeight: '400' }}
+                style={{ fontWeight: '600' }}
             >
                 {filledSchedule[index].name.length <= 8 ? (
                     filledSchedule[index].name
                 ) : (
                     <>
-                        {filledSchedule[index].name.substring(0, 9)}
+                        {filledSchedule[index].name.substring(0, 8)}
                         <tspan x={x} dy="8">
-                            {filledSchedule[index].name.substring(9)}
+                            {filledSchedule[index].name.substring(8)}
                         </tspan>
                     </>
                 )}
@@ -148,10 +157,12 @@ export const CustomPieChart: FC<Prop> = ({ data: tmpData }) => {
                 labelLine={false}
             >
                 {filledSchedule.map((item, index) => (
-                    <Cell
-                        key={`cell-${index}`}
-                        fill={item.isEmpty ? '#E0E0E0' : COLORS[index % COLORS.length]}
-                    />
+                    <>
+                        <Cell
+                            key={`cell-${index}`}
+                            fill={item.isEmpty ? '#E0E0E0' : COLORS[index % COLORS.length]}
+                        />
+                    </>
                 ))}
             </Pie>
             {renderMemoryLines()}
