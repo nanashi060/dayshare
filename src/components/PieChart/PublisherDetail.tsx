@@ -7,6 +7,7 @@ import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import { auth } from '../../firebase/client';
 import axios from 'axios';
 import useSWR from 'swr';
+import Link from 'next/link';
 
 type Prop = {
     data: {
@@ -54,7 +55,7 @@ export const Publisher: React.FC<Prop> = ({ data }) => {
     }, [userId]);
 
     return (
-        <div className="flex gap-x-3">
+        <Link href={`/profile/${profileData?.userId}`} className="flex gap-x-3">
             <Image
                 src={imageUrl}
                 alt=""
@@ -69,6 +70,6 @@ export const Publisher: React.FC<Prop> = ({ data }) => {
                 </div>
                 <p className="text-xs font-normal text-[#5F5F5F]">{formatTime}</p>
             </div>
-        </div>
+        </Link>
     );
 };

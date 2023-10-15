@@ -12,5 +12,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const doc = await db.collection(COLLECTION_NAME).doc(docId!).get();
 
     const data = doc.data();
-    res.status(200).json(data);
+    res.status(200).json({ userId: id, ...data });
 }

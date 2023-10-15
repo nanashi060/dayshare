@@ -55,12 +55,7 @@ export default function Sidebar() {
         <div className="p-6 w-1/4 bg-white text-left h-screen min-w-max border-r border-gray-D9 sticky top-0">
             <div className="w-12">
                 <a href="/">
-                <img
-                src={'dayshare-notitle.png'}
-                alt="DayShare-logo"
-                width={80}
-                height={80}
-            />
+                    <img src={'dayshare-notitle.png'} alt="DayShare-logo" width={80} height={80} />
                 </a>
             </div>
             <div className="mt-10 ml-6 mb-16">
@@ -72,7 +67,7 @@ export default function Sidebar() {
                 </NavigationLink>
                 {session ? (
                     <>
-                        <NavigationLink href={`/profile`} icon={<FaUser size={36} />}>
+                        <NavigationLink href={`/profile/${userId}`} icon={<FaUser size={36} />}>
                             プロフィール
                         </NavigationLink>
                         <ActionButton href="/postmodal">

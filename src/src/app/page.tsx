@@ -5,6 +5,7 @@ import Sidebar from '../../components/SidebarComponent';
 import { Header } from '../../components/header';
 import { SeoHead } from '../../components/seohead';
 import { Contents } from 'components/PieChart/Contents';
+import SessionProvider from '../../provider/SessionProvider';
 
 const Home = async () => {
     const pageOgImg: string = `${process.env.NEXT_PUBLIC_DEFAULT_SITE_URL}`;
