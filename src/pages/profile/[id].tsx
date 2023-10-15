@@ -15,8 +15,8 @@ const Profile = () => {
             <main>
                 <div className="flex">
                     <Sidebar />
-                    <Header />
                     <div className="w-full">
+                        <Header />
                         {id ? <ProfileTop userId={id as string} /> : <div>loading...</div>}
                         <ProfileCardList userId={id as string} />
                     </div>
