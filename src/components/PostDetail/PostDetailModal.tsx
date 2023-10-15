@@ -7,6 +7,7 @@ import { Publisher } from 'components/PieChart/PublisherDetail';
 import { CustomPieChart } from 'components/PieChart/CustomPieChart';
 import { Tag } from 'components/PieChart/Tag';
 import { LikeButton } from 'components/PieChart/LikeButton';
+import { CommentComponent } from 'components/PieChart/CommentComponent';
 
 const customStyles: ReactModal.Styles = {
     overlay: {
@@ -25,7 +26,7 @@ const customStyles: ReactModal.Styles = {
         right: 'auto',
         bottom: 'auto',
         width: '488px',
-        height: 'auto',
+        height: '830px',
         borderRadius: '20px 20px 20px 20px',
         border: '0px',
         padding: '30px',
@@ -58,13 +59,13 @@ const PostDetailModal: FC<Prop> = ({ isOpen, openModal, closeModal, item }) => {
                 </div>
                 <div className="max-w-[300px] ml-[34px]">{item.details}</div>
                 <div className="pt-6 pl-[34px]">
-                    <Tag titleList={['大学生']} />
+                    <Tag titleList={item.tags} />
                 </div>
                 <div className="pt-2">
                     <LikeButton data={item} />
                 </div>
                 <div className="border-b pt-3 border-[#B7B7B7]"></div>
-                <CommentList data={data} />
+                <CommentComponent postID={item.id}/>
             </div>
         </Modal>
     );
