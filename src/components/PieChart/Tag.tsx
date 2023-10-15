@@ -9,7 +9,7 @@ export const Tag: FC<prop> = ({ titleList }) => {
     const router = useRouter();
     return (
         <>
-            <div className="flex gap-x-1">
+            <div className="flex gap-x-1 w-[200px] flex-wrap gap-y-1">
                 {titleList.map((title: string, index: number) => (
                     <button
                         key={`${title}-${index}`}
