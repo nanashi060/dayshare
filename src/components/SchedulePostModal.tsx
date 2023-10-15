@@ -137,6 +137,8 @@ const App: React.FC = () => {
             setTags([]);
             setDetails('');
             setCategory('');
+            setModalIsOpen(false);
+            router.push('./');
         } catch (e) {
             console.error('Error adding document: ', e);
             setError('データの保存に失敗しました。');

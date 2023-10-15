@@ -4,6 +4,7 @@ import { Publisher } from './PublisherDetail';
 import { Tag } from './Tag';
 import { FC, useState } from 'react';
 import PostDetailModal from 'components/PostDetail/PostDetailModal';
+import { Loading } from './CardList/Loading';
 
 type porp = { publisherData: any };
 
@@ -11,7 +12,11 @@ export const Card: FC<porp> = ({ publisherData }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<any>(null);
     if (!publisherData) {
-        return <div>Loading...</div>;
+        return (
+            <div>
+                <Loading />
+            </div>
+        );
     }
     const uniqueId = publisherData.id;
     const likeNum = publisherData.likeNum;

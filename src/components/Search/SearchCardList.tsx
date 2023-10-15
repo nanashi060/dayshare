@@ -2,6 +2,7 @@ import { Card } from '../PieChart/Card';
 import axios from 'axios';
 import React from 'react';
 import useSWR from 'swr';
+import { Loading } from '../PieChart/CardList/Loading';
 
 export const SearchCardList = ({ searchTerm }: { searchTerm: string }) => {
     const fetcher = (url: string) => axios.get(url).then((res) => res.data);
@@ -11,7 +12,11 @@ export const SearchCardList = ({ searchTerm }: { searchTerm: string }) => {
     const publisherData: any = tmpUserData;
 
     if (!publisherData) {
-        return <div>Loading...</div>;
+        return (
+            <div>
+                <Loading />
+            </div>
+        );
     }
 
     return (

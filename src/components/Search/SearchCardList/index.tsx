@@ -15,7 +15,7 @@ export const SearchCardList = ({ searchTerm }: { searchTerm: string }) => {
     }
 
     return (
-        <div className="grid-cols-3 mx-auto grid gap-y-10 place-items-center my-5 w-full">
+        <div className="grid-cols-3 mx-auto grid gap-y-10 justify-items-center mt-5 mb-44 w-full">
             {publisherData &&
                 publisherData.map((item: any, index: number) => (
                     <Card key={index} publisherData={item} />

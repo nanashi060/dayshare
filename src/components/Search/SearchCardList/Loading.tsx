@@ -2,7 +2,7 @@ export const Loading = () => {
     const repeatElements = new Array(6).fill(null);
 
     return (
-        <div className="grid-cols-3 mx-auto grid gap-y-10 place-items-center">
+        <div className="grid-cols-3 mx-auto grid gap-y-10 justify-items-center mt-5 mb-44">
             {repeatElements.map((_, index) => (
                 <div key={index}>
                     <div className="w-[200px] h-[40px] mx-auto rounded-md bg-slate-200 animate-pulse"></div>
