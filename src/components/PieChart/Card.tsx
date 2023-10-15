@@ -1,4 +1,3 @@
-import PostDetail from 'components/PostDetail/PostDetail';
 import { CustomPieChart } from './CustomPieChart';
 import { LikeButton } from './LikeButton';
 import { Publisher } from './PublisherDetail';
