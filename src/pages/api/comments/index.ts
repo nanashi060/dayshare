@@ -1,5 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { db } from '../../../firebase/admin';
+type Comment = {
+    id: string;
+    postID: string;
+    userID: string;
+    text: string;
+    parentCommentID?: string | null;
+    timestamp: {
+        _seconds: number;
+        _nanoseconds: number;
+    };
+};
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'GET') {
@@ -14,9 +25,28 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 .collection('comments')
                 .where('postID', '==', postID)
                 .get();
-            const comments = commentsQuery.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            const comments: Comment[] = commentsQuery.docs.map(
+                (doc) => ({ id: doc.id, ...doc.data() }) as Comment
+            );
 
-            return res.status(200).json(comments);
+            const mainComments = comments.filter((comment) => !comment.parentCommentID);
+            const replyComments = comments.filter((comment) => comment.parentCommentID);
+
+            mainComments.sort((a, b) => a.timestamp._seconds - b.timestamp._seconds);
+
+            const sortedComments = [];
+            for (const mainComment of mainComments) {
+                sortedComments.push(mainComment);
+
+                const relatedReplies = replyComments.filter(
+                    (reply) => reply.parentCommentID === mainComment.id
+                );
+                relatedReplies.sort((a, b) => a.timestamp._seconds - b.timestamp._seconds);
+
+                sortedComments.push(...relatedReplies);
+            }
+
+            return res.status(200).json(sortedComments);
         } catch (error) {
             if (error instanceof Error) {
                 return res.status(500).json({ error: error.message });

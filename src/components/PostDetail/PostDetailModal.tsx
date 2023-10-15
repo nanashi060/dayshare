@@ -59,7 +59,7 @@ const PostDetailModal: FC<Prop> = ({ isOpen, openModal, closeModal, item }) => {
                 </div>
                 <div className="max-w-[300px] ml-[34px]">{item.details}</div>
                 <div className="pt-6 pl-[34px]">
-                    <Tag titleList={['大学生']} />
+                    <Tag titleList={item.tags} />
                 </div>
                 <div className="pt-2">
                     <LikeButton data={item} />

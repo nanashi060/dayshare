@@ -115,29 +115,42 @@ export const CommentComponent: React.FC<Props> = ({ postID }) => {
     };
 
     return (
-        <div className="mt-[14px] grid gap-y-5">
+        <div className="mt-4 grid gap-y-4">
             {Array.isArray(comments) &&
                 comments.map((comment) => (
-                    <div
-                        key={comment.id}
-                        style={{ marginLeft: comment.parentCommentID ? '20px' : '0' }}
-                    >
+                    <div key={comment.id} className={comment.parentCommentID ? 'ml-5' : ''}>
                         <Comment comment={comment} />
-                        <button onClick={() => setReplyTo(comment.id)}>
-                            Reply to this comment
+                        <button
+                            className="text-blue-500 hover:text-blue-700 hover:underline mt-2"
+                            onClick={() => setReplyTo(comment.id)}
+                        >
+                            このコメントに返信
                         </button>
                     </div>
                 ))}
 
             <div>
-                {replyTo && <p>Replying to comment ID: {replyTo}</p>}
+                {replyTo && <p className="mb-2">コメントID {replyTo} に返信しています。</p>}
                 <textarea
                     value={text}
                     onChange={(e) => setText(e.target.value)}
-                    placeholder="Add a comment or reply..."
+                    placeholder="コメントまたは返信を追加..."
+                    className="w-full p-2 border rounded-md mb-2 resize-none"
                 />
-                <button onClick={() => postComment(replyTo)}>Post</button>
-                {replyTo && <button onClick={() => setReplyTo(undefined)}>Cancel Reply</button>}
+                <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+                    onClick={() => postComment(replyTo)}
+                >
+                    投稿
+                </button>
+                {replyTo && (
+                    <button
+                        className="ml-3 text-red-500 hover:text-red-700 hover:underline"
+                        onClick={() => setReplyTo(undefined)}
+                    >
+                        返信をキャンセル
+                    </button>
+                )}
             </div>
         </div>
     );
