@@ -26,7 +26,7 @@ const customStyles: ReactModal.Styles = {
         right: 'auto',
         bottom: 'auto',
         width: '488px',
-        height: 'auto',
+        height: '830px',
         borderRadius: '20px 20px 20px 20px',
         border: '0px',
         padding: '30px',
