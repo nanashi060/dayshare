@@ -72,7 +72,7 @@ export default function Sidebar() {
                 </NavigationLink>
                 {session ? (
                     <>
-                        <NavigationLink href={`/profile`} icon={<FaUser size={36} />}>
+                        <NavigationLink href={`/profile/${userId}`} icon={<FaUser size={36} />}>
                             プロフィール
                         </NavigationLink>
                         <ActionButton href="/postmodal">

@@ -1,4 +1,3 @@
-import { CardList } from 'components/PieChart/CardList';
 import ClientComponent from '../../components/ClientComponent';
 import ServerComponent from '../../components/ServerComponent';
 import Sidebar from '../../components/SidebarComponent';
