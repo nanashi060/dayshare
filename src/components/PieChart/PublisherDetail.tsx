@@ -29,8 +29,8 @@ export const Publisher: React.FC<Prop> = ({ data }) => {
     const profileData = tmpProfileData?.data;
     console.log(profileData);
 
-    const name = profileData?.name;
-    const id = profileData?.id;
+    const name = tmpProfileData?.name;
+    const id = tmpProfileData?.id;
 
     useEffect(() => {
         if (!userId) return;
@@ -55,7 +55,7 @@ export const Publisher: React.FC<Prop> = ({ data }) => {
     }, [userId]);
 
     return (
-        <Link href={`/profile/${profileData?.userId}`} className="flex gap-x-3">
+        <Link href={`/profile/${tmpProfileData?.userId}`} className="flex gap-x-3">
             <Image
                 src={imageUrl}
                 alt=""
