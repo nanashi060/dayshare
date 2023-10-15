@@ -53,7 +53,7 @@ export const CustomPieChart: FC<Prop> = ({ data: tmpData }) => {
         '#FFC0CB',
         '#ADD8E6',
         '#90EE90',
-        '#FFFFE0',
+        '#AE6FFF',
     ];
 
     const RADIAN = Math.PI / 180;
