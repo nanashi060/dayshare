@@ -6,3 +6,5 @@ docker-compose build
 ```
 docker-compose up
 ```
+
+https://dayshare.vercel.app/
